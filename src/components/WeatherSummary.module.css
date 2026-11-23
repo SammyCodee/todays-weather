@@ -1,0 +1,104 @@
+.summary {
+  position: relative;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.placeholder {
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--color-text-muted);
+}
+
+/*
+ * Mobile-first layout: two columns.
+ * Left: temperature, H/L, location. Right: condition, humidity, time.
+ */
+.details {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'temp  condition'
+    'range humidity'
+    'loc   time';
+  align-items: end;
+  column-gap: var(--space-4);
+}
+
+.details p {
+  margin: 0;
+}
+
+.icon {
+  position: absolute;
+  top: var(--icon-top);
+  right: calc(-1 * var(--space-4));
+  width: var(--icon-size);
+  height: var(--icon-size);
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.temperature {
+  grid-area: temp;
+  font-size: clamp(4.5rem, 18vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--color-temperature);
+}
+
+.range {
+  grid-area: range;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.location {
+  grid-area: loc;
+  font-weight: 700;
+  color: var(--color-text-strong);
+}
+
+.time,
+.humidity,
+.condition {
+  text-align: right;
+  color: var(--color-text-muted);
+}
+
+.time {
+  grid-area: time;
+}
+
+.humidity {
+  grid-area: humidity;
+}
+
+.condition {
+  grid-area: condition;
+}
+
+.description {
+  display: block;
+  font-size: 0.8125rem;
+}
+
+/* Wider screens: one row of details under the temperature, like the desktop mockup */
+@media (min-width: 640px) {
+  .details {
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas:
+      'temp  temp  temp     temp'
+      'range range range    range'
+      'loc   time  humidity condition';
+    column-gap: var(--space-6);
+  }
+
+  .time {
+    text-align: left;
+  }
+}

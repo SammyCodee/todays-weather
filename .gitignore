@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+*.log
+.DS_Store
+
+# Local env files hold the real API key — never commit them
+.env
+.env.local
+.env.*.local
