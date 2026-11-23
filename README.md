@@ -9,8 +9,8 @@ UI behaviour decisions are listed in [ASSUMPTIONS.md](ASSUMPTIONS.md).
 
 ## Features
 
-- Search by **city** and optional **country**. The country can be a name ("Malaysia",
-  "South Korea") or an ISO code ("MY", "KR").
+- Search by **city**, by **city + country**, or by **country** alone. The country can
+  be a name ("Malaysia", "South Korea") or an ISO code ("MY", "KR").
 - Shows the temperature, the high/low, the condition and description, humidity, the
   location and the time of the search.
 - **Search history**: newest first, saved in `localStorage`. Each row can search
@@ -25,15 +25,90 @@ UI behaviour decisions are listed in [ASSUMPTIONS.md](ASSUMPTIONS.md).
   `role="alert"` errors, visible keyboard focus, 44px touch targets, and support for
   `prefers-reduced-motion`.
 
-## Getting started
+## How to open the app
 
-Requires **Node.js 18+**.
+### 1. What you need
+
+- **Node.js 18 or newer.** Check with `node -v`. If you don't have it, install the LTS
+  version from [nodejs.org](https://nodejs.org/).
+- **Git**, to download the code.
+- **A free OpenWeather API key:**
+  1. Sign up at [openweathermap.org](https://home.openweathermap.org/users/sign_up).
+  2. Open [API keys](https://home.openweathermap.org/api_keys) and copy your key.
+  3. A brand-new key can take **up to 2 hours** to start working. Until then, searches
+     show an "API key" error.
+
+### 2. Download the code
+
+```bash
+git clone https://github.com/SammyCodee/todays-weather.git
+cd todays-weather
+```
+
+### 3. Install the dependencies
 
 ```bash
 npm install
-cp .env.example .env.local      # then put your OpenWeather API key in .env.local
-npm run dev                     # http://localhost:5173
 ```
+
+### 4. Add your API key
+
+Copy the example settings file:
+
+```bash
+cp .env.example .env.local
+```
+
+Open `.env.local` in any text editor and replace `your_api_key_here` with your key:
+
+```
+VITE_OPENWEATHER_API_KEY=abc123yourrealkey
+```
+
+`.env.local` is listed in `.gitignore`, so your key is never committed.
+
+### 5. Start the app
+
+```bash
+npm run dev
+```
+
+Then open **http://localhost:5173** in your browser. To stop the app, press `Ctrl + C`
+in the terminal.
+
+### 6. Try it
+
+- Type `Johor` in **City** and `Malaysia` in **Country**, then press **Enter** or the
+  🔍 button.
+- Type only `Indonesia` in **Country** to see the weather for the whole country.
+- Type `xxx` in **City** to see the "Not found" message.
+- Use 🔍 / 🗑 on a history row to search that place again or delete it.
+- Use the ☀️ / 🌙 button at the top right to switch theme.
+- To see the mobile layout, open your browser's developer tools and turn on device
+  mode, or open the app on your phone (see below).
+
+### Open it on your phone (optional)
+
+Make sure your phone and computer are on the same Wi-Fi. Then run:
+
+```bash
+npm run dev -- --host
+```
+
+Open the **Network** address it prints (for example `http://192.168.1.10:5173`) in
+your phone's browser.
+
+### Troubleshooting
+
+| Problem | Fix |
+| --- | --- |
+| `npm run dev` fails with a syntax or engine error | Your Node.js is too old. Run `node -v` and upgrade to 18 or newer. |
+| "No API key configured" | `.env.local` is missing or misnamed. Repeat step 4, then restart `npm run dev`. |
+| "The weather service rejected the API key" | The key is wrong, or still activating (allow up to 2 hours). |
+| You changed `.env.local` but nothing changed | Stop the app with `Ctrl + C` and run `npm run dev` again. Settings are only read at startup. |
+| Port 5173 is already in use | Vite picks the next free port automatically. Use the URL it prints. |
+
+## Other commands
 
 | Script            | What it does                         |
 | ----------------- | ------------------------------------ |
